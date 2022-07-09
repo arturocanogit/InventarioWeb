@@ -14,7 +14,6 @@ namespace InventarioWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
         // GET: Proveedores
         public ActionResult Index()
         {
