@@ -8,8 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using InventarioWeb.Models;
 
-namespace InventarioWeb.Controllers
+namespace AppInventarioWeb.Controllers
 {
+    [Authorize]
     public class ProveedoresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,7 +18,7 @@ namespace InventarioWeb.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View(db.Proveedors.ToList());
+            return View(db.Proveedores.ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -27,7 +28,7 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Proveedor proveedor = db.Proveedors.Find(id);
+            Proveedor proveedor = db.Proveedores.Find(id);
             if (proveedor == null)
             {
                 return HttpNotFound();
@@ -46,11 +47,21 @@ namespace InventarioWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NegocioId,ProveedorId,Nombre,Activo,FechaAlta,FechaMod")] Proveedor proveedor)
+        public ActionResult Create([Bind(Include = "ProveedorId,Nombre")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
-                db.Proveedors.Add(proveedor);
+                Session["NegocioId"] = 1;
+                int negocioId = (int)Session["NegocioId"];
+                int proveedorId = (db.Proveedores
+                    .Where(x => x.NegocioId == 1).Max(x => (int?)x.ProveedorId) ?? 0) + 1;
+
+                proveedor.NegocioId = (int)Session["NegocioId"];
+                proveedor.ProveedorId = proveedorId;
+                proveedor.FechaAlta = DateTime.Now;
+                proveedor.Activo = true;
+
+                db.Proveedores.Add(proveedor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +76,7 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Proveedor proveedor = db.Proveedors.Find(id);
+            Proveedor proveedor = db.Proveedores.Find(id);
             if (proveedor == null)
             {
                 return HttpNotFound();
@@ -78,7 +89,7 @@ namespace InventarioWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NegocioId,ProveedorId,Nombre,Activo,FechaAlta,FechaMod")] Proveedor proveedor)
+        public ActionResult Edit([Bind(Include = "ProveedorId,Nombre")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +107,7 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Proveedor proveedor = db.Proveedors.Find(id);
+            Proveedor proveedor = db.Proveedores.Find(id);
             if (proveedor == null)
             {
                 return HttpNotFound();
@@ -109,8 +120,8 @@ namespace InventarioWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Proveedor proveedor = db.Proveedors.Find(id);
-            db.Proveedors.Remove(proveedor);
+            Proveedor proveedor = db.Proveedores.Find(id);
+            db.Proveedores.Remove(proveedor);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

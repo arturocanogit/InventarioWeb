@@ -30,10 +30,10 @@ namespace InventarioWeb.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Producto> Productoes { get; set; }
-
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Almacen> Almacens { get; set; }
-
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Proveedor> Proveedors { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Producto> Productos { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Almacen> Almacen { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Proveedor> Proveedores { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Inventario> Inventario { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Negocio> Negocio { get; set; }
     }
 }

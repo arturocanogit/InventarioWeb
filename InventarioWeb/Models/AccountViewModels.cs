@@ -65,6 +65,14 @@ namespace InventarioWeb.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Nombre de negocio")]
+        public string Negocio { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre de usuario")]
+        public string Nombre { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }

@@ -17,7 +17,7 @@
     <AssemblyName>InventarioWeb</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44344</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -182,15 +182,37 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlmacenController.cs" />
+    <Compile Include="Controllers\Api\AlmacenController.cs" />
+    <Compile Include="Controllers\Api\ProveedoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207100508557_InitialCreate.cs" />
+    <Compile Include="Migrations\202207100508557_InitialCreate.designer.cs">
+      <DependentUpon>202207100508557_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110428555_M1.cs" />
+    <Compile Include="Migrations\202207110428555_M1.designer.cs">
+      <DependentUpon>202207110428555_M1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110436158_M2.cs" />
+    <Compile Include="Migrations\202207110436158_M2.designer.cs">
+      <DependentUpon>202207110436158_M2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110607553_M3.cs" />
+    <Compile Include="Migrations\202207110607553_M3.designer.cs">
+      <DependentUpon>202207110607553_M3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Almacen.cs" />
+    <Compile Include="Models\Dtos\ProductoDto.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Global.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -207,13 +229,214 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="dist\css\adminlte.css" />
+    <Content Include="dist\css\adminlte.min.css" />
+    <Content Include="dist\img\AdminLTELogo.png" />
+    <Content Include="dist\img\avatar.png" />
+    <Content Include="dist\img\avatar2.png" />
+    <Content Include="dist\img\avatar3.png" />
+    <Content Include="dist\img\avatar4.png" />
+    <Content Include="dist\img\avatar5.png" />
+    <Content Include="dist\img\boxed-bg.jpg" />
+    <Content Include="dist\img\boxed-bg.png" />
+    <Content Include="dist\img\credit\american-express.png" />
+    <Content Include="dist\img\credit\cirrus.png" />
+    <Content Include="dist\img\credit\mastercard.png" />
+    <Content Include="dist\img\credit\paypal.png" />
+    <Content Include="dist\img\credit\paypal2.png" />
+    <Content Include="dist\img\credit\visa.png" />
+    <Content Include="dist\img\default-150x150.png" />
+    <Content Include="dist\img\icons.png" />
+    <Content Include="dist\img\photo1.png" />
+    <Content Include="dist\img\photo2.png" />
+    <Content Include="dist\img\photo3.jpg" />
+    <Content Include="dist\img\photo4.jpg" />
+    <Content Include="dist\img\prod-1.jpg" />
+    <Content Include="dist\img\prod-2.jpg" />
+    <Content Include="dist\img\prod-3.jpg" />
+    <Content Include="dist\img\prod-4.jpg" />
+    <Content Include="dist\img\prod-5.jpg" />
+    <Content Include="dist\img\user1-128x128.jpg" />
+    <Content Include="dist\img\user2-160x160.jpg" />
+    <Content Include="dist\img\user3-128x128.jpg" />
+    <Content Include="dist\img\user4-128x128.jpg" />
+    <Content Include="dist\img\user5-128x128.jpg" />
+    <Content Include="dist\img\user6-128x128.jpg" />
+    <Content Include="dist\img\user7-128x128.jpg" />
+    <Content Include="dist\img\user8-128x128.jpg" />
+    <Content Include="dist\js\adminlte.js" />
+    <Content Include="dist\js\adminlte.min.js" />
+    <Content Include="dist\js\demo.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="plugins\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="plugins\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="plugins\datatables-bs4\css\dataTables.bootstrap4.css" />
+    <Content Include="plugins\datatables-bs4\css\dataTables.bootstrap4.min.css" />
+    <Content Include="plugins\datatables-bs4\js\dataTables.bootstrap4.js" />
+    <Content Include="plugins\datatables-bs4\js\dataTables.bootstrap4.min.js" />
+    <Content Include="plugins\datatables-buttons\css\buttons.bootstrap4.css" />
+    <Content Include="plugins\datatables-buttons\css\buttons.bootstrap4.min.css" />
+    <Content Include="plugins\datatables-buttons\js\buttons.bootstrap4.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.bootstrap4.min.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.colVis.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.colVis.min.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.flash.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.flash.min.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.html5.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.html5.min.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.print.js" />
+    <Content Include="plugins\datatables-buttons\js\buttons.print.min.js" />
+    <Content Include="plugins\datatables-buttons\js\dataTables.buttons.js" />
+    <Content Include="plugins\datatables-buttons\js\dataTables.buttons.min.js" />
+    <Content Include="plugins\datatables-responsive\css\responsive.bootstrap4.css" />
+    <Content Include="plugins\datatables-responsive\css\responsive.bootstrap4.min.css" />
+    <Content Include="plugins\datatables-responsive\js\dataTables.responsive.js" />
+    <Content Include="plugins\datatables-responsive\js\dataTables.responsive.min.js" />
+    <Content Include="plugins\datatables-responsive\js\responsive.bootstrap4.js" />
+    <Content Include="plugins\datatables-responsive\js\responsive.bootstrap4.min.js" />
+    <Content Include="plugins\datatables-select\css\select.bootstrap4.css" />
+    <Content Include="plugins\datatables-select\css\select.bootstrap4.min.css" />
+    <Content Include="plugins\datatables-select\js\dataTables.select.js" />
+    <Content Include="plugins\datatables-select\js\dataTables.select.min.js" />
+    <Content Include="plugins\datatables-select\js\select.bootstrap4.js" />
+    <Content Include="plugins\datatables-select\js\select.bootstrap4.min.js" />
+    <Content Include="plugins\datatables\jquery.dataTables.js" />
+    <Content Include="plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="plugins\fontawesome-free\css\all.css" />
+    <Content Include="plugins\fontawesome-free\css\all.min.css" />
+    <Content Include="plugins\fontawesome-free\css\brands.css" />
+    <Content Include="plugins\fontawesome-free\css\brands.min.css" />
+    <Content Include="plugins\fontawesome-free\css\fontawesome.css" />
+    <Content Include="plugins\fontawesome-free\css\fontawesome.min.css" />
+    <Content Include="plugins\fontawesome-free\css\regular.css" />
+    <Content Include="plugins\fontawesome-free\css\regular.min.css" />
+    <Content Include="plugins\fontawesome-free\css\solid.css" />
+    <Content Include="plugins\fontawesome-free\css\solid.min.css" />
+    <Content Include="plugins\fontawesome-free\css\svg-with-js.css" />
+    <Content Include="plugins\fontawesome-free\css\svg-with-js.min.css" />
+    <Content Include="plugins\fontawesome-free\css\v4-shims.css" />
+    <Content Include="plugins\fontawesome-free\css\v4-shims.min.css" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <Content Include="plugins\jquery\jquery.js" />
+    <Content Include="plugins\jquery\jquery.min.js" />
+    <Content Include="plugins\jquery\jquery.slim.js" />
+    <Content Include="plugins\jquery\jquery.slim.min.js" />
+    <Content Include="plugins\jszip\jszip.js" />
+    <Content Include="plugins\jszip\jszip.min.js" />
+    <Content Include="plugins\pdfmake\pdfmake.js" />
+    <Content Include="plugins\pdfmake\pdfmake.min.js" />
+    <Content Include="plugins\pdfmake\vfs_fonts.js" />
+    <Content Include="plugins\select2-bootstrap4-theme\select2-bootstrap4.css" />
+    <Content Include="plugins\select2-bootstrap4-theme\select2-bootstrap4.min.css" />
+    <Content Include="plugins\select2\css\select2.css" />
+    <Content Include="plugins\select2\css\select2.min.css" />
+    <Content Include="plugins\select2\js\i18n\af.js" />
+    <Content Include="plugins\select2\js\i18n\ar.js" />
+    <Content Include="plugins\select2\js\i18n\az.js" />
+    <Content Include="plugins\select2\js\i18n\bg.js" />
+    <Content Include="plugins\select2\js\i18n\bn.js" />
+    <Content Include="plugins\select2\js\i18n\bs.js" />
+    <Content Include="plugins\select2\js\i18n\build.txt" />
+    <Content Include="plugins\select2\js\i18n\ca.js" />
+    <Content Include="plugins\select2\js\i18n\cs.js" />
+    <Content Include="plugins\select2\js\i18n\da.js" />
+    <Content Include="plugins\select2\js\i18n\de.js" />
+    <Content Include="plugins\select2\js\i18n\dsb.js" />
+    <Content Include="plugins\select2\js\i18n\el.js" />
+    <Content Include="plugins\select2\js\i18n\en.js" />
+    <Content Include="plugins\select2\js\i18n\es.js" />
+    <Content Include="plugins\select2\js\i18n\et.js" />
+    <Content Include="plugins\select2\js\i18n\eu.js" />
+    <Content Include="plugins\select2\js\i18n\fa.js" />
+    <Content Include="plugins\select2\js\i18n\fi.js" />
+    <Content Include="plugins\select2\js\i18n\fr.js" />
+    <Content Include="plugins\select2\js\i18n\gl.js" />
+    <Content Include="plugins\select2\js\i18n\he.js" />
+    <Content Include="plugins\select2\js\i18n\hi.js" />
+    <Content Include="plugins\select2\js\i18n\hr.js" />
+    <Content Include="plugins\select2\js\i18n\hsb.js" />
+    <Content Include="plugins\select2\js\i18n\hu.js" />
+    <Content Include="plugins\select2\js\i18n\hy.js" />
+    <Content Include="plugins\select2\js\i18n\id.js" />
+    <Content Include="plugins\select2\js\i18n\is.js" />
+    <Content Include="plugins\select2\js\i18n\it.js" />
+    <Content Include="plugins\select2\js\i18n\ja.js" />
+    <Content Include="plugins\select2\js\i18n\ka.js" />
+    <Content Include="plugins\select2\js\i18n\km.js" />
+    <Content Include="plugins\select2\js\i18n\ko.js" />
+    <Content Include="plugins\select2\js\i18n\lt.js" />
+    <Content Include="plugins\select2\js\i18n\lv.js" />
+    <Content Include="plugins\select2\js\i18n\mk.js" />
+    <Content Include="plugins\select2\js\i18n\ms.js" />
+    <Content Include="plugins\select2\js\i18n\nb.js" />
+    <Content Include="plugins\select2\js\i18n\ne.js" />
+    <Content Include="plugins\select2\js\i18n\nl.js" />
+    <Content Include="plugins\select2\js\i18n\pl.js" />
+    <Content Include="plugins\select2\js\i18n\ps.js" />
+    <Content Include="plugins\select2\js\i18n\pt-BR.js" />
+    <Content Include="plugins\select2\js\i18n\pt.js" />
+    <Content Include="plugins\select2\js\i18n\ro.js" />
+    <Content Include="plugins\select2\js\i18n\ru.js" />
+    <Content Include="plugins\select2\js\i18n\sk.js" />
+    <Content Include="plugins\select2\js\i18n\sl.js" />
+    <Content Include="plugins\select2\js\i18n\sq.js" />
+    <Content Include="plugins\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="plugins\select2\js\i18n\sr.js" />
+    <Content Include="plugins\select2\js\i18n\sv.js" />
+    <Content Include="plugins\select2\js\i18n\th.js" />
+    <Content Include="plugins\select2\js\i18n\tk.js" />
+    <Content Include="plugins\select2\js\i18n\tr.js" />
+    <Content Include="plugins\select2\js\i18n\uk.js" />
+    <Content Include="plugins\select2\js\i18n\vi.js" />
+    <Content Include="plugins\select2\js\i18n\zh-CN.js" />
+    <Content Include="plugins\select2\js\i18n\zh-TW.js" />
+    <Content Include="plugins\select2\js\select2.full.js" />
+    <Content Include="plugins\select2\js\select2.full.min.js" />
+    <Content Include="plugins\select2\js\select2.js" />
+    <Content Include="plugins\select2\js\select2.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="plugins\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="plugins\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="plugins\bootstrap\js\bootstrap.js.map" />
+    <Content Include="plugins\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="plugins\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <Content Include="plugins\jquery\jquery.min.map" />
+    <Content Include="plugins\jquery\jquery.slim.min.map" />
+    <Content Include="plugins\pdfmake\pdfmake.js.map" />
+    <Content Include="plugins\pdfmake\pdfmake.min.js.map" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="dist\css\adminlte.css.map" />
+    <Content Include="dist\css\adminlte.min.css.map" />
+    <Content Include="dist\js\.eslintrc.json" />
+    <Content Include="dist\js\adminlte.js.map" />
+    <Content Include="dist\js\adminlte.min.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Controllers\AlmacenController.js" />
+    <Content Include="Scripts\Controllers\GlobalController.js" />
+    <Content Include="Scripts\Controllers\InventarioController.js" />
+    <Content Include="Scripts\Controllers\ProductosController.js" />
+    <Content Include="Scripts\Controllers\ProveedoresController.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -268,6 +491,16 @@
     <Content Include="Views\Proveedores\Details.cshtml" />
     <Content Include="Views\Proveedores\Edit.cshtml" />
     <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Inventario\Create.cshtml" />
+    <Content Include="Views\Inventario\Delete.cshtml" />
+    <Content Include="Views\Inventario\Details.cshtml" />
+    <Content Include="Views\Inventario\Edit.cshtml" />
+    <Content Include="Views\Inventario\Index.cshtml" />
+    <Content Include="Views\Almacen\Create.cshtml" />
+    <Content Include="Views\Almacen\Delete.cshtml" />
+    <Content Include="Views\Almacen\Details.cshtml" />
+    <Content Include="Views\Almacen\Edit.cshtml" />
+    <Content Include="Views\Almacen\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -284,6 +517,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202207100508557_InitialCreate.resx">
+      <DependentUpon>202207100508557_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110428555_M1.resx">
+      <DependentUpon>202207110428555_M1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110436158_M2.resx">
+      <DependentUpon>202207110436158_M2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110607553_M3.resx">
+      <DependentUpon>202207110607553_M3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -303,7 +550,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59437</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44344/</IISUrl>
+          <IISUrl>http://localhost/InventarioWeb</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

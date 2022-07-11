@@ -7,9 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InventarioWeb.Models;
+using InventarioWeb.Models.Dtos;
+using Global;
 
-namespace InventarioWeb.Controllers
+namespace AppInventarioWeb.Controllers
 {
+    [Authorize]
     public class ProductosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,8 +20,21 @@ namespace InventarioWeb.Controllers
         // GET: Productos
         public ActionResult Index()
         {
-            var productoes = db.Productoes.Include(p => p.Almacen).Include(p => p.Proveedor);
-            return View(productoes.ToList());
+            IEnumerable<ProductoDto> productos = db.Productos
+                .Include(x => x.Proveedor)
+                .Select(x => new ProductoDto
+                {
+                    ProveedorId = x.ProveedorId,
+                    ProductoId = x.ProductoId,
+                    Nombre = x.Nombre,
+                    Costo = x.Costo,
+                    Precio = x.Precio,
+                    Contenido = x.Contenido,
+                    Unidad = x.Unidad,
+                    ProveedorNombre = x.Proveedor.Nombre
+                });
+
+            return View(productos);
         }
 
         // GET: Productos/Details/5
@@ -28,7 +44,7 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Producto producto = db.Productoes.Find(id);
+            Producto producto = db.Productos.Find(id);
             if (producto == null)
             {
                 return HttpNotFound();
@@ -39,8 +55,7 @@ namespace InventarioWeb.Controllers
         // GET: Productos/Create
         public ActionResult Create()
         {
-            ViewBag.NegocioId = new SelectList(db.Almacens, "NegocioId", "Nombre");
-            ViewBag.NegocioId = new SelectList(db.Proveedors, "NegocioId", "Nombre");
+            ViewBag.NegocioId = new SelectList(db.Proveedores, "NegocioId", "Nombre");
             return View();
         }
 
@@ -49,17 +64,41 @@ namespace InventarioWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NegocioId,ProductoId,ProveedorId,AlmacenId,Nombre,Costo,Precio,Contenido,Unidad,Activo,FechaAlta,FechaMod")] Producto producto)
+        public ActionResult Create(Producto producto)
         {
+            const int negocioId = 1;
+            producto.NegocioId = negocioId;
+
             if (ModelState.IsValid)
             {
-                db.Productoes.Add(producto);
+                int productoId = db.Productos
+                    .Where(x => x.NegocioId == negocioId)
+                    .Max(x => (int?)x.ProductoId) ?? 0;
+
+                producto.ProductoId = productoId + 1;
+
+                db.Productos.Add(producto);
                 db.SaveChanges();
+
+                var inventario = new Inventario
+                {
+                    NegocioId = negocioId,
+                    ProductoId = producto.ProductoId,
+                    Cantidad = 5
+                };
+
+                int inventarioId = db.Inventario
+                   .Where(x => x.NegocioId == negocioId)
+                   .Max(x => (int?)x.InventarioId) ?? 0;
+
+                inventario.InventarioId = inventarioId + 1;
+                db.Inventario.Add(inventario);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.NegocioId = new SelectList(db.Almacens, "NegocioId", "Nombre", producto.NegocioId);
-            ViewBag.NegocioId = new SelectList(db.Proveedors, "NegocioId", "Nombre", producto.NegocioId);
+            ViewBag.NegocioId = new SelectList(db.Proveedores, "NegocioId", "Nombre", producto.NegocioId);
             return View(producto);
         }
 
@@ -70,13 +109,12 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Producto producto = db.Productoes.Find(id);
+            Producto producto = db.Productos.Find(id);
             if (producto == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.NegocioId = new SelectList(db.Almacens, "NegocioId", "Nombre", producto.NegocioId);
-            ViewBag.NegocioId = new SelectList(db.Proveedors, "NegocioId", "Nombre", producto.NegocioId);
+            ViewBag.NegocioId = new SelectList(db.Proveedores, "NegocioId", "Nombre", producto.NegocioId);
             return View(producto);
         }
 
@@ -85,7 +123,7 @@ namespace InventarioWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NegocioId,ProductoId,ProveedorId,AlmacenId,Nombre,Costo,Precio,Contenido,Unidad,Activo,FechaAlta,FechaMod")] Producto producto)
+        public ActionResult Edit([Bind(Include = "NegocioId,ProveedorId,ProductoId,Nombre,Costo,Precio,UnidadNumero,UnidadLetra")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -93,8 +131,7 @@ namespace InventarioWeb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.NegocioId = new SelectList(db.Almacens, "NegocioId", "Nombre", producto.NegocioId);
-            ViewBag.NegocioId = new SelectList(db.Proveedors, "NegocioId", "Nombre", producto.NegocioId);
+            ViewBag.NegocioId = new SelectList(db.Proveedores, "NegocioId", "Nombre", producto.NegocioId);
             return View(producto);
         }
 
@@ -105,7 +142,7 @@ namespace InventarioWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Producto producto = db.Productoes.Find(id);
+            Producto producto = db.Productos.Find(id);
             if (producto == null)
             {
                 return HttpNotFound();
@@ -118,8 +155,8 @@ namespace InventarioWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Producto producto = db.Productoes.Find(id);
-            db.Productoes.Remove(producto);
+            Producto producto = db.Productos.Find(id);
+            db.Productos.Remove(producto);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

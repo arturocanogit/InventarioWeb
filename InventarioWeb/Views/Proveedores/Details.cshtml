@@ -1,4 +1,4 @@
-﻿@model InventarioWeb.Models.Proveedor
+﻿@model AppInventarioWeb.Models.Proveedor
 
 @{
     ViewBag.Title = "Details";
@@ -18,33 +18,9 @@
             @Html.DisplayFor(model => model.Nombre)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaAlta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaAlta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaMod)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaMod)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProveedorId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -10,9 +10,9 @@ namespace InventarioWeb.Models
     [Table("Negocio")]
     public class Negocio : Entity
     {
-        [Key, Column(Order = 0)]
+        [Key]
         public int NegocioId { get; set; }
-        [Key, Column(Order = 1)]
+        [Required, StringLength(64)]
         public string Nombre { get; set; }
     }
 }
