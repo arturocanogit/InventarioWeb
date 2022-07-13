@@ -17,7 +17,8 @@ namespace AppInventarioWeb.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View(db.Almacen.ToList());
+            int negocioId = (int)Session["NegocioId"];
+            return View(db.Almacenes.Where(x => x.NegocioId == negocioId).ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -50,9 +51,8 @@ namespace AppInventarioWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                Session["NegocioId"] = 1;
                 int negocioId = (int)Session["NegocioId"];
-                int almacenId = (db.Almacen
+                int almacenId = (db.Almacenes
                     .Where(x => x.NegocioId == 1).Max(x => (int?)x.AlmacenId) ?? 0) + 1;
 
                 almacen.NegocioId = (int)Session["NegocioId"];
@@ -60,7 +60,7 @@ namespace AppInventarioWeb.Controllers
                 almacen.FechaAlta = DateTime.Now;
                 almacen.Activo = true;
 
-                db.Almacen.Add(almacen);
+                db.Almacenes.Add(almacen);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

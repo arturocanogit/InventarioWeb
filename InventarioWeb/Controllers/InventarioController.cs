@@ -17,7 +17,7 @@ namespace AppInventarioWeb.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View(db.Inventario.ToList());
+            return View(db.Inventarios.ToList());
         }
 
         // GET: Proveedores/Details/5

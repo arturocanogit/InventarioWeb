@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Registration Page (v2)</title>
+    <title>Inventario Web</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,17 +24,18 @@
     <div class="register-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="Login" class="h1"><b>Admin</b>LTE</a>
+                <a href="Login" class="h1"><b>INVENTARIO WEB</b></a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Register a new membership</p>
+                <p class="login-box-msg">Registarse como nuevo usuario</p>
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Negocio, new { @class = "form-control" })
+                        <input type="text" name="Negocio" class="form-control" placeholder="Ponle un nombre a tu negocio" />
+                        @*@Html.TextBoxFor(m => m.Negocio, new { @class = "form-control" })*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -42,7 +43,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                        <input type="text" name="Nombre" class="form-control" placeholder="Ingresa tu nombre completo" />
+                        @*@Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -50,7 +52,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        <input type="text" name="Email" class="form-control" placeholder="Ingresa tu correo electronico" />
+                        @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -66,7 +69,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        <input type="text" name="ConfirmPassword" class="form-control" placeholder="Confirma tu contraseña" />
+                        @*@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })*@
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -84,7 +88,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary btn-block">Registarse</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -93,11 +97,11 @@
                 <div class="social-auth-links text-center">
                     <a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i>
-                        Sign up using Facebook
+                        Registarse usando facebook
                     </a>
                     <a href="#" class="btn btn-block btn-danger">
                         <i class="fab fa-google-plus mr-2"></i>
-                        Sign up using Google+
+                        Registarse usando Google+
                     </a>
                 </div>
 

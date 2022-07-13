@@ -193,22 +193,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202207100508557_InitialCreate.cs" />
-    <Compile Include="Migrations\202207100508557_InitialCreate.designer.cs">
-      <DependentUpon>202207100508557_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202207110428555_M1.cs" />
-    <Compile Include="Migrations\202207110428555_M1.designer.cs">
-      <DependentUpon>202207110428555_M1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202207110436158_M2.cs" />
-    <Compile Include="Migrations\202207110436158_M2.designer.cs">
-      <DependentUpon>202207110436158_M2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202207110607553_M3.cs" />
-    <Compile Include="Migrations\202207110607553_M3.designer.cs">
-      <DependentUpon>202207110607553_M3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Almacen.cs" />
@@ -218,9 +202,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Membresia.cs" />
     <Compile Include="Models\Negocio.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Proveedor.cs" />
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\UsuarioMembresia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -517,20 +504,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202207100508557_InitialCreate.resx">
-      <DependentUpon>202207100508557_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202207110428555_M1.resx">
-      <DependentUpon>202207110428555_M1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202207110436158_M2.resx">
-      <DependentUpon>202207110436158_M2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202207110607553_M3.resx">
-      <DependentUpon>202207110607553_M3.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

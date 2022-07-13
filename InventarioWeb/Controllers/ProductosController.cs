@@ -20,7 +20,10 @@ namespace AppInventarioWeb.Controllers
         // GET: Productos
         public ActionResult Index()
         {
+            int negocioId = (int)Session["NegocioId"];
+
             IEnumerable<ProductoDto> productos = db.Productos
+                .Where(x => x.NegocioId == negocioId)
                 .Include(x => x.Proveedor)
                 .Select(x => new ProductoDto
                 {
@@ -66,7 +69,7 @@ namespace AppInventarioWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Producto producto)
         {
-            const int negocioId = 1;
+            int negocioId = (int)Session["NegocioId"]; 
             producto.NegocioId = negocioId;
 
             if (ModelState.IsValid)
@@ -87,12 +90,12 @@ namespace AppInventarioWeb.Controllers
                     Cantidad = 5
                 };
 
-                int inventarioId = db.Inventario
+                int inventarioId = db.Inventarios
                    .Where(x => x.NegocioId == negocioId)
                    .Max(x => (int?)x.InventarioId) ?? 0;
 
                 inventario.InventarioId = inventarioId + 1;
-                db.Inventario.Add(inventario);
+                db.Inventarios.Add(inventario);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

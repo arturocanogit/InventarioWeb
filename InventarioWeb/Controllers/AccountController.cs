@@ -81,6 +81,10 @@ namespace InventarioWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+                    Usuario usuario = db.Usuarios.First(x => x.Email.Equals(model.Email));
+                    Session["NegocioId"] = usuario.NegocioId;
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -153,23 +157,36 @@ namespace InventarioWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Nombre, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    db.Negocio.Add(new Negocio 
+                    Negocio negocio = db.Negocios.Add(new Negocio 
                     {
                         Nombre = model.Negocio
                     });
                     await db.SaveChangesAsync();
+
+                    int usuarioId = (db.Usuarios
+                    .Where(x => x.NegocioId == negocio.NegocioId).Max(x => (int?)x.UsuarioId) ?? 0) + 1;
+
+                    Usuario usuario = db.Usuarios.Add(new Usuario
+                    {
+                        UsuarioId = usuarioId,
+                        Nombre = model.Nombre,
+                        NegocioId = negocio.NegocioId,
+                        Email = model.Email
+                    });
+                    await db.SaveChangesAsync();
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar un correo electrónico con este vínculo
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar la cuenta", "Para confirmar su cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
 
+                    Session["NegocioId"] = usuario.NegocioId;
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

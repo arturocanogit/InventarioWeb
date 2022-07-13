@@ -7,7 +7,7 @@ using System.Web;
 
 namespace InventarioWeb.Models
 {
-    [Table("Negocio")]
+    [Table("Negocios")]
     public class Negocio : Entity
     {
         [Key]

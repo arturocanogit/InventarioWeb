@@ -18,7 +18,8 @@ namespace AppInventarioWeb.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View(db.Proveedores.ToList());
+            int negocioId = (int)Session["NegocioId"];
+            return View(db.Proveedores.Where(x => x.NegocioId == negocioId).ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -51,7 +52,6 @@ namespace AppInventarioWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                Session["NegocioId"] = 1;
                 int negocioId = (int)Session["NegocioId"];
                 int proveedorId = (db.Proveedores
                     .Where(x => x.NegocioId == 1).Max(x => (int?)x.ProveedorId) ?? 0) + 1;

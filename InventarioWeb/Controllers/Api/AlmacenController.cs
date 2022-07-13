@@ -19,14 +19,14 @@ namespace AppInventarioWeb.Controllers.Api
         // GET: api/Almacen
         public IQueryable<Almacen> GetAlmacen()
         {
-            return db.Almacen;
+            return db.Almacenes;
         }
 
         // GET: api/Almacen/5
         [ResponseType(typeof(Almacen))]
         public IHttpActionResult GetAlmacen(int id)
         {
-            Almacen Almacen = db.Almacen.Find(id);
+            Almacen Almacen = db.Almacenes.Find(id);
             if (Almacen == null)
             {
                 return NotFound();
@@ -79,7 +79,7 @@ namespace AppInventarioWeb.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.Almacen.Add(Almacen);
+            db.Almacenes.Add(Almacen);
 
             try
             {
@@ -104,13 +104,13 @@ namespace AppInventarioWeb.Controllers.Api
         [ResponseType(typeof(Almacen))]
         public IHttpActionResult DeleteAlmacen(int id)
         {
-            Almacen Almacen = db.Almacen.Find(id);
+            Almacen Almacen = db.Almacenes.Find(id);
             if (Almacen == null)
             {
                 return NotFound();
             }
 
-            db.Almacen.Remove(Almacen);
+            db.Almacenes.Remove(Almacen);
             db.SaveChanges();
 
             return Ok(Almacen);
@@ -127,7 +127,7 @@ namespace AppInventarioWeb.Controllers.Api
 
         private bool AlmacenExists(int id)
         {
-            return db.Almacen.Count(e => e.NegocioId == id) > 0;
+            return db.Almacenes.Count(e => e.NegocioId == id) > 0;
         }
     }
 }

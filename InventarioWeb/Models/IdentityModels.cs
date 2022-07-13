@@ -31,9 +31,12 @@ namespace InventarioWeb.Models
         }
 
         public System.Data.Entity.DbSet<InventarioWeb.Models.Producto> Productos { get; set; }
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Almacen> Almacen { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Almacen> Almacenes { get; set; }
         public System.Data.Entity.DbSet<InventarioWeb.Models.Proveedor> Proveedores { get; set; }
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Inventario> Inventario { get; set; }
-        public System.Data.Entity.DbSet<InventarioWeb.Models.Negocio> Negocio { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Inventario> Inventarios { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Negocio> Negocios { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Usuario> Usuarios { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.Membresia> Membresias { get; set; }
+        public System.Data.Entity.DbSet<InventarioWeb.Models.UsuarioMembresia> UsuariosMembresias { get; set; }
     }
 }
