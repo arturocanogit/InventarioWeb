@@ -418,6 +418,8 @@
     <Content Include="dist\js\.eslintrc.json" />
     <Content Include="dist\js\adminlte.js.map" />
     <Content Include="dist\js\adminlte.min.js.map" />
+    <None Include="Properties\PublishProfiles\InventarioWebsite - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\InventarioWebsite - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Controllers\AlmacenController.js" />
     <Content Include="Scripts\Controllers\GlobalController.js" />
