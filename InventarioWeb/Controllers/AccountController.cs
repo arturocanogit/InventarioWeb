@@ -75,6 +75,32 @@ namespace InventarioWeb.Controllers
                 return View(model);
             }
 
+            //var user = await UserManager.FindByEmailAsync(model.Email);
+
+            //var ident = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            //ident.AddClaim(new Claim(ClaimTypes.System, "1"));
+
+            Usuario usuario = db.Usuarios.First(x => x.Email.Equals(model.Email));
+
+            var user = UserManager.Find(model.Email, model.Password);
+            if (user != null)
+            {
+                var ident = UserManager.CreateIdentity(user,
+                    DefaultAuthenticationTypes.ApplicationCookie);
+                ident.AddClaims(new[] {
+                    new Claim(ClaimTypes.System, usuario.NegocioId.ToString()),
+                });
+                AuthenticationManager.SignIn(
+                    new AuthenticationProperties() { IsPersistent = true },
+                    ident);
+                return RedirectToLocal(returnUrl);
+            }
+            ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
+            return View(model);
+
+
+
+
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -82,8 +108,9 @@ namespace InventarioWeb.Controllers
             {
                 case SignInStatus.Success:
 
-                    Usuario usuario = db.Usuarios.First(x => x.Email.Equals(model.Email));
-                    Session["NegocioId"] = usuario.NegocioId;
+                    
+
+
 
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -178,7 +205,21 @@ namespace InventarioWeb.Controllers
                         Email = model.Email
                     });
                     await db.SaveChangesAsync();
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+
+                    var ident = UserManager.CreateIdentity(user,
+                         DefaultAuthenticationTypes.ApplicationCookie);
+                    ident.AddClaims(new[] {
+                    new Claim(ClaimTypes.System, usuario.NegocioId.ToString()),
+                    });
+                    AuthenticationManager.SignIn(
+                        new AuthenticationProperties() { IsPersistent = true },
+                        ident);
+                    return RedirectToAction("Index", "Home");
+
+
+
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar un correo electrónico con este vínculo
@@ -186,8 +227,8 @@ namespace InventarioWeb.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar la cuenta", "Para confirmar su cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
 
-                    Session["NegocioId"] = usuario.NegocioId;
-                    return RedirectToAction("Index", "Home");
+                    //Session["NegocioId"] = usuario.NegocioId;
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

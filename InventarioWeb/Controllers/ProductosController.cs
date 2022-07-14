@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using InventarioWeb.Models;
 using InventarioWeb.Models.Dtos;
 using Global;
+using System.Security.Claims;
+using System.Threading;
 
 namespace AppInventarioWeb.Controllers
 {
@@ -16,11 +18,12 @@ namespace AppInventarioWeb.Controllers
     public class ProductosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ClaimsPrincipal identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
         // GET: Productos
         public ActionResult Index()
         {
-            int negocioId = (int)Session["NegocioId"];
+            int negocioId = int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
 
             IEnumerable<ProductoDto> productos = db.Productos
                 .Where(x => x.NegocioId == negocioId)
@@ -36,6 +39,12 @@ namespace AppInventarioWeb.Controllers
                     Unidad = x.Unidad,
                     ProveedorNombre = x.Proveedor.Nombre
                 });
+
+            ViewBag.ProveedorId = new SelectList(db.Proveedores
+                .Where(x => x.NegocioId == negocioId), "ProveedorId", "Nombre");
+
+            ViewBag.AlmacenId = new SelectList(db.Almacenes
+                .Where(x => x.NegocioId == negocioId), "AlmacenId", "Nombre");
 
             return View(productos);
         }

@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using InventarioWeb.Models;
@@ -14,11 +16,12 @@ namespace AppInventarioWeb.Controllers
     public class ProveedoresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ClaimsPrincipal identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
         // GET: Proveedores
         public ActionResult Index()
         {
-            int negocioId = (int)Session["NegocioId"];
+            int negocioId = int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
             return View(db.Proveedores.Where(x => x.NegocioId == negocioId).ToList());
         }
 

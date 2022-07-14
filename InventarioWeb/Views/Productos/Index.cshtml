@@ -159,11 +159,7 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <label for="ProveedorId">Proveedor</label>
-                                <select class="form-control" style="width: 100%;" id="ProveedorId" name="ProveedorId" required>
-                                    <option ng-repeat="proveedor in proveedores" value="{{proveedor.ProveedorId}}">
-                                        {{proveedor.Nombre}}
-                                    </option>
-                                </select>
+                                @Html.DropDownList("ProveedorId", null, htmlAttributes: new { @class = "form-control" })
                                 <div class="valid-feedback">
                                     Buen trabajo!
                                 </div>
@@ -202,11 +198,7 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <label for="AlmacenId">Almacen</label>
-                                <select class="form-control" style="width: 100%;" id="AlmacenId" name="AlmacenId" required>
-                                    <option ng-repeat="almacen in almacenes" value="{{almacen.AlmacenId}}">
-                                        {{almacen.Nombre}}
-                                    </option>
-                                </select>
+                                @Html.DropDownList("AlmacenId", null, htmlAttributes: new { @class = "form-control" })
                                 <div class="valid-feedback">
                                     Buen trabajo!
                                 </div>
