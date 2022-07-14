@@ -34,7 +34,7 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })
                     <div class="input-group mb-3">
-                        <input type="text" name="Negocio" class="form-control" placeholder="Ponle un nombre a tu negocio" />
+                        <input type="text" name="Negocio" class="form-control" placeholder="Ingresa un nombre a tu negocio" />
                         @*@Html.TextBoxFor(m => m.Negocio, new { @class = "form-control" })*@
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -79,12 +79,12 @@
                     </div>
                     <div class="row">
                         <div class="col-8">
-                            <div class="icheck-primary">
+                            @*<div class="icheck-primary">
                                 <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                                 <label for="agreeTerms">
                                     Acepto los <a href="#">Terminos</a>
                                 </label>
-                            </div>
+                            </div>*@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">

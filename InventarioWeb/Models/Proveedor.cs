@@ -16,5 +16,13 @@ namespace InventarioWeb.Models
         public int ProveedorId { get; set; }
         [Required, MaxLength(64)]
         public string Nombre { get; set; }
+        [MaxLength(256)]
+        public string Direccion { get; set; }
+        [MaxLength(32)]
+        public string Email { get; set; }
+        [MaxLength(10)]
+        public string Telefono { get; set; }
+        [MaxLength(15)]
+        public string Rfc { get; set; }
     }
 }

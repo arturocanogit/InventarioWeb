@@ -48,7 +48,7 @@ namespace AppInventarioWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProveedorId,Nombre")] Proveedor proveedor)
+        public ActionResult Create(Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {

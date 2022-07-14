@@ -37,20 +37,20 @@
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
                     <div class="input-group mb-3">
                         @*<input type="email" class="form-control" placeholder="Email">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>*@
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>*@
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="input-group mb-3">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -59,7 +59,6 @@
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                     <div class="row">
                         <div class="col-8">
@@ -88,11 +87,14 @@
                 </div>
                 <!-- /.social-auth-links -->
 
-                <p class="mb-1">
-                    <a href="forgot-password.html">Se me olvido mi contraseña</a>
-                </p>
+
+                <h5>
+                    <a href="Register" class="text-center">
+                        <b>Soy nuevo usuario</b>
+                    </a>
+                </h5>
                 <p class="mb-0">
-                    <a href="Register" class="text-center">Registarme</a>
+                    <a href="forgot-password.html">Se me olvido mi contraseña</a>
                 </p>
             </div>
             <!-- /.card-body -->

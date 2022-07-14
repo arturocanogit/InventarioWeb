@@ -31,6 +31,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Nombre</th>
+                                        <th>Direccion</th>
+                                        <th>Email</th>
+                                        <th>Telefono</th>
+                                        <th>Rfc</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +47,18 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Direccion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Telefono)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Rfc)
+                                            </td>
                                         </tr>
                                     }
 
@@ -51,6 +67,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Nombre</th>
+                                        <th>Direccion</th>
+                                        <th>Email</th>
+                                        <th>Telefono</th>
+                                        <th>Rfc</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -90,6 +110,49 @@
                                 Porfavor ingresa un nombre valido.
                             </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="Direccion">Dirección</label>
+                            <input type="text" class="form-control text-uppercase" id="Direccion" name="Direccion" maxlength="256">
+                            <div class="valid-feedback">
+                                Buen trabajo!
+                            </div>
+                            <div class="invalid-feedback">
+                                Porfavor ingresa una dirección valido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Telefono">Telefono</label>
+                            <input type="tel" class="form-control" id="Telefono" name="Telefono" maxlength="10">
+                            <div class="valid-feedback">
+                                Buen trabajo!
+                            </div>
+                            <div class="invalid-feedback">
+                                Porfavor ingresa un telefono valido.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="Email">Email</label>
+                            <input type="email" class="form-control text-uppercase" id="Email" name="Email" maxlength="32">
+                            <div class="valid-feedback">
+                                Buen trabajo!
+                            </div>
+                            <div class="invalid-feedback">
+                                Porfavor ingresa un email valido.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="Rfc">Rfc</label>
+                            <input type="text" class="form-control text-uppercase" id="Rfc" name="Rfc" maxlength="15">
+                            <div class="valid-feedback">
+                                Buen trabajo!
+                            </div>
+                            <div class="invalid-feedback">
+                                Porfavor ingresa un Rfc valido.
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -146,6 +209,26 @@
 
     $(function () {
         $("#table").DataTable({
+            "language": {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
             "columnDefs": [
                 {
                     "targets": [0],
