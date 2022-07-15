@@ -15,13 +15,20 @@ namespace AppInventarioWeb.Controllers
     public class AlmacenController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
         private ClaimsPrincipal identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+        public int NegocioId 
+        { 
+            get 
+            {
+                return int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
+            } 
+        }
 
         // GET: Proveedores
         public ActionResult Index()
         {
-            int negocioId = int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
-            return View(db.Almacenes.Where(x => x.NegocioId == negocioId).ToList());
+            return View(db.Almacenes.Where(x => x.NegocioId == NegocioId).ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -54,11 +61,10 @@ namespace AppInventarioWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                int negocioId = (int)Session["NegocioId"];
                 int almacenId = (db.Almacenes
-                    .Where(x => x.NegocioId == 1).Max(x => (int?)x.AlmacenId) ?? 0) + 1;
+                    .Where(x => x.NegocioId == NegocioId).Max(x => (int?)x.AlmacenId) ?? 0) + 1;
 
-                almacen.NegocioId = (int)Session["NegocioId"];
+                almacen.NegocioId = NegocioId;
                 almacen.AlmacenId = almacenId;
                 almacen.FechaAlta = DateTime.Now;
                 almacen.Activo = true;

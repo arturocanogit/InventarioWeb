@@ -17,12 +17,18 @@ namespace AppInventarioWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ClaimsPrincipal identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+        public int NegocioId
+        {
+            get
+            {
+                return int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
+            }
+        }
 
         // GET: Proveedores
         public ActionResult Index()
         {
-            int negocioId = int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
-            return View(db.Proveedores.Where(x => x.NegocioId == negocioId).ToList());
+            return View(db.Proveedores.Where(x => x.NegocioId == NegocioId).ToList());
         }
 
         // GET: Proveedores/Details/5
@@ -55,11 +61,10 @@ namespace AppInventarioWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                int negocioId = (int)Session["NegocioId"];
                 int proveedorId = (db.Proveedores
-                    .Where(x => x.NegocioId == 1).Max(x => (int?)x.ProveedorId) ?? 0) + 1;
+                    .Where(x => x.NegocioId == NegocioId).Max(x => (int?)x.ProveedorId) ?? 0) + 1;
 
-                proveedor.NegocioId = (int)Session["NegocioId"];
+                proveedor.NegocioId = NegocioId;
                 proveedor.ProveedorId = proveedorId;
                 proveedor.FechaAlta = DateTime.Now;
                 proveedor.Activo = true;

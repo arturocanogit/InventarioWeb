@@ -19,14 +19,19 @@ namespace AppInventarioWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ClaimsPrincipal identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+        public int NegocioId
+        {
+            get
+            {
+                return int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
+            }
+        }
 
         // GET: Productos
         public ActionResult Index()
         {
-            int negocioId = int.Parse(identity.Claims.Where(c => c.Type == ClaimTypes.System).Select(c => c.Value).Single());
-
             IEnumerable<ProductoDto> productos = db.Productos
-                .Where(x => x.NegocioId == negocioId)
+                .Where(x => x.NegocioId == NegocioId)
                 .Include(x => x.Proveedor)
                 .Select(x => new ProductoDto
                 {
@@ -41,10 +46,10 @@ namespace AppInventarioWeb.Controllers
                 });
 
             ViewBag.ProveedorId = new SelectList(db.Proveedores
-                .Where(x => x.NegocioId == negocioId), "ProveedorId", "Nombre");
+                .Where(x => x.NegocioId == NegocioId), "ProveedorId", "Nombre");
 
             ViewBag.AlmacenId = new SelectList(db.Almacenes
-                .Where(x => x.NegocioId == negocioId), "AlmacenId", "Nombre");
+                .Where(x => x.NegocioId == NegocioId), "AlmacenId", "Nombre");
 
             return View(productos);
         }
@@ -78,13 +83,12 @@ namespace AppInventarioWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Producto producto)
         {
-            int negocioId = (int)Session["NegocioId"]; 
-            producto.NegocioId = negocioId;
+            producto.NegocioId = NegocioId;
 
             if (ModelState.IsValid)
             {
                 int productoId = db.Productos
-                    .Where(x => x.NegocioId == negocioId)
+                    .Where(x => x.NegocioId == NegocioId)
                     .Max(x => (int?)x.ProductoId) ?? 0;
 
                 producto.ProductoId = productoId + 1;
@@ -94,13 +98,13 @@ namespace AppInventarioWeb.Controllers
 
                 var inventario = new Inventario
                 {
-                    NegocioId = negocioId,
+                    NegocioId = NegocioId,
                     ProductoId = producto.ProductoId,
                     Cantidad = 5
                 };
 
                 int inventarioId = db.Inventarios
-                   .Where(x => x.NegocioId == negocioId)
+                   .Where(x => x.NegocioId == NegocioId)
                    .Max(x => (int?)x.InventarioId) ?? 0;
 
                 inventario.InventarioId = inventarioId + 1;
