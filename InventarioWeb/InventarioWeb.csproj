@@ -228,6 +228,7 @@
     <Content Include="dist\img\avatar3.png" />
     <Content Include="dist\img\avatar4.png" />
     <Content Include="dist\img\avatar5.png" />
+    <Content Include="dist\img\bg.png" />
     <Content Include="dist\img\boxed-bg.jpg" />
     <Content Include="dist\img\boxed-bg.png" />
     <Content Include="dist\img\credit\american-express.png" />
@@ -237,6 +238,7 @@
     <Content Include="dist\img\credit\paypal2.png" />
     <Content Include="dist\img\credit\visa.png" />
     <Content Include="dist\img\default-150x150.png" />
+    <Content Include="dist\img\defaultUser.jpg" />
     <Content Include="dist\img\icons.png" />
     <Content Include="dist\img\photo1.png" />
     <Content Include="dist\img\photo2.png" />
